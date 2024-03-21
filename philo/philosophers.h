@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/21 16:52:14 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/03/21 17:35:18 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,19 @@
 
 // Structs
 
-typedef struct s_threads
+typedef struct s_philo
 {
-	pthread_t			thread;
+	pthtread_t	thread;
+	int			id;
+	int			living_state;
+	size_t		last_meal;
+}				t_philo;
+
+typedef struct s_philoll
+{
+	t_philo				content;
 	struct s_threads	*next;
-}						t_threads;
+}						t_philoll;
 
 // Custom Functions
 
