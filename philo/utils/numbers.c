@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:30:04 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/21 17:02:10 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/03/25 14:17:20 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	ret(const char *str, int i, int n)
 	return ((int)o * n);
 }
 
-int	atoi(const char *str)
+int	ph_atoi(const char *str)
 {
 	int	i;
 	int	n;
