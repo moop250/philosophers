@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/25 18:25:02 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:52:54 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
-# include <stdatomic.h>
 
 // Structs
 
@@ -27,27 +26,34 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				*living_state;
+	int				eating;
+	int				sleeping;
+	int				waiting;
 	size_t			last_meal;
+	int				meals_eaten;
+	int				living_state;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-}				t_philo;
+	t_core			*core;
+}					t_philo;
 
 typedef struct s_core
 {
-	int			num_of_philos;
-	size_t		time_to_die;
-	size_t		time_to_eat;
-	size_t		time_to_sleep;
-	int			eat_limit;
-	atomic_bool	living_state;
-	t_philo		**philos;
-}				t_core;
+	int				num_of_philos;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int				eat_limit;
+	int				living_state;
+	t_philo			**philos;
+}					t_core;
 
 // Custom Functions
 
 int		checker(int ac, char **av);
 int		ph_atoi(const char *str)
 int		isdigit(int c);
+void	*ph_monitor(void *core);
+void	*philo_brain(void *in)
 
 #endif
