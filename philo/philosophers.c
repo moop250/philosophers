@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/26 17:58:46 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:22:21 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,34 @@ void	free_core(t_core *core)
 	free(core);
 }
 
-int	init_threads(t_core *core, int i)
+int	init_philos(t_core *core, int i)
 {
 	core->philos[i] = malloc(sizeof(t_philo));
 	if (!core->philos[i])
 		return (1);
 	core->philos[i]->id = i;
-	if (pthread_mutex_init(&core->philos[i]->r_fork, NULL) != 0)
+	if (pthread_mutex_init(&core->philos[i]->l_fork, NULL) != 0)
 		return (1);
 	if (i != 0)
-		core->philos[i]->l_fork = core->philos[i - 1]->r_fork;
-	else if (i == core->num_of_philos - 1)
-		core->philos[0]->l_fork = core->philos[i]->r_fork;
+		core->philos[i]->l_fork = &core->philos[i - 1]->r_fork;
+	else if (i = core->num_of_philos - 1)
+		core->philos[0]->l_fork = &core->philos[i]->r_fork;
 	core->philos[i]->core = core;
 	core->philos[i]->living_state = -1;
-	pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
-		(void *) &core->philos[i]);
+	return (0);
+}
+
+int	init_threads(t_core *core)
+{
+	int	i;
+
+	i = -1;
+	while (core->philos[++i])
+	{
+		core->philos[i]->start_time = get_current_time();
+		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
+			(void *) &core->philos[i]);
+	}
 	return (0);
 }
 
@@ -61,13 +73,16 @@ int	fillcore(t_core *core, char **av)
 	if (av[5])
 		core->eat_limit = ph_atoi(av[5]);
 	core->living_state = -1;
+	if (init_forks(core) == 1)
 	core->philos = malloc((core->num_of_philos + 1) * sizeof(t_philo *));
 	if (!core->philos)
 		return (1);
 	while (++i < core->num_of_philos)
-		if (init_threads(core, i) == 1)
+		if (init_philos(core, i); == 1)
 			return (1);
 	core->philos[i] = NULL;
+	if (init_threads(core) == 1)
+			return (1);
 	return (0);
 }
 
