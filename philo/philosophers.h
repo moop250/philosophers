@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/27 17:01:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/03/28 14:28:35 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ typedef struct s_core
 // Custom Functions
 
 int		checker(int ac, char **av);
-int		ph_atoi(const char *str)
+int		ph_atoi(const char *str);
 int		isdigit(int c);
 void	*ph_monitor(void *core);
-void	*philo_brain(void *in)
+void	*philo_brain(void *in);
 size_t	get_current_time(void);
 int		ph_usleep(size_t milliseconds);
 
