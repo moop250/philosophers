@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/27 17:22:21 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/02 18:51:34 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	free_core(t_core *core)
 		}
 		free(core->philos);
 	}
+	if (core->death_lock)
+		pthread_mutex_destroy(&core->death_lock);
+	if (core->write_lock)
+		pthread_mutex_destroy(&core->write_lock);
 	free(core);
 }
 
@@ -44,6 +48,11 @@ int	init_philos(t_core *core, int i)
 		core->philos[0]->l_fork = &core->philos[i]->r_fork;
 	core->philos[i]->core = core;
 	core->philos[i]->living_state = -1;
+	core->philos[i]->has_thought = 0;
+	if (is_even(i))
+		core->philos[i]->has_eaten = 0;
+	else
+		core->philos[i]->has_eaten = 1;
 	return (0);
 }
 
@@ -55,6 +64,7 @@ int	init_threads(t_core *core)
 	while (core->philos[++i])
 	{
 		core->philos[i]->start_time = get_current_time();
+		core->philos[i]->last_meal = core->philos[i]->start_time;
 		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
 			(void *) &core->philos[i]);
 	}
@@ -74,11 +84,15 @@ int	fillcore(t_core *core, char **av)
 		core->eat_limit = ph_atoi(av[5]);
 	core->living_state = -1;
 	if (init_forks(core) == 1)
-	core->philos = malloc((core->num_of_philos + 1) * sizeof(t_philo *));
+		core->philos = malloc((core->num_of_philos + 1) * sizeof(t_philo *));
+	if (pthread_mutex_init(&core->death_lock, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&core->write_lock, NULL) != 0)
+		return (1);
 	if (!core->philos)
 		return (1);
 	while (++i < core->num_of_philos)
-		if (init_philos(core, i); == 1)
+		if (init_philos(core, i) == 1)
 			return (1);
 	core->philos[i] = NULL;
 	if (init_threads(core) == 1)
@@ -99,8 +113,6 @@ int	main(int ac, char **av)
 		return (2);
 	if (fillcore(core, av))
 		free_core(core);
-	pthread_create(monitor, NULL, &ph_monitor, (void *) &core);
-	pthread_join(monitor, NULL)
 	i = -1;
 	while (core->philos[++i])
 		pthread_join(core->philos[i]->thread, NULL);

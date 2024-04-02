@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/28 14:28:35 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/02 18:47:09 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				eating;
-	int				sleeping;
-	int				waiting;
+	int				has_eaten;
+	int				has_thought;
 	size_t			last_meal;
 	size_t			start_time;
 	int				meals_eaten;
@@ -48,6 +47,8 @@ typedef struct s_core
 	int				eat_limit;
 	int				living_state;
 	t_philo			**philos;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t	write_lock;
 }					t_core;
 
 // Custom Functions
@@ -55,9 +56,11 @@ typedef struct s_core
 int		checker(int ac, char **av);
 int		ph_atoi(const char *str);
 int		isdigit(int c);
-void	*ph_monitor(void *core);
 void	*philo_brain(void *in);
 size_t	get_current_time(void);
 int		ph_usleep(size_t milliseconds);
+int		is_even(int in);
+int		checkdeath(t_philo *philo, t_core *core);
+int		checkhunger(t_philo *philo, t_core *core):
 
 #endif

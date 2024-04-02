@@ -88,7 +88,7 @@ RESET = \033[0m
 
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=thread
 RM = rm -f
 
 SRCS = philosophers.c \

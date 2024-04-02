@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   thread_checkers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 14:54:00 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/02 15:29:31 by hlibine          ###   ########.fr       */
+/*   Created: 2024/04/02 16:09:01 by hlibine           #+#    #+#             */
+/*   Updated: 2024/04/02 16:28:00 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int	ph_usleep(size_t milliseconds)
+int	checkdeath(t_philo *philo, t_core *core)
 {
-	size_t	start;
+	int	status;
 
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-		usleep(500);
-	return (0);
+	pthread_mutex_lock(&core->death_lock);
+	status = core->living_state;
+	pthread_mutex_unlock(&core->death_lock);
+	if (status < 0)
+		return (0);
+	return (1);
 }
 
-size_t	get_current_time(void)
+int	checkhunger(t_philo *philo, t_core *core)
 {
-	struct timeval now;
-
-	if (gettimeofday(&now, NULL) == 0)
-		write(2, "philo error : gettimeofday() failure\n", 38);
-	return (now.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
-int	is_even(int in)
-{
-	if (in % 2 == 0)
-		return (1);
-	return (0);
+	if (philo->meals_eaten >= core->eat_limit)
+		return (0);
+	return (1);
 }
