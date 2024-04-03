@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/02 18:51:34 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/03 17:12:36 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	init_philos(t_core *core, int i)
 	if (!core->philos[i])
 		return (1);
 	core->philos[i]->id = i;
-	if (pthread_mutex_init(&core->philos[i]->l_fork, NULL) != 0)
+	if (pthread_mutex_init(&core->philos[i]->r_fork, NULL) != 0)
 		return (1);
 	if (i != 0)
 		core->philos[i]->l_fork = &core->philos[i - 1]->r_fork;
@@ -48,11 +48,12 @@ int	init_philos(t_core *core, int i)
 		core->philos[0]->l_fork = &core->philos[i]->r_fork;
 	core->philos[i]->core = core;
 	core->philos[i]->living_state = -1;
-	core->philos[i]->has_thought = 0;
+	core->philos[i]->has_thought = false;
+	core->philos[i]->has_eaten = false;
 	if (is_even(i))
-		core->philos[i]->has_eaten = 0;
+		core->philos[i]->wait = false;
 	else
-		core->philos[i]->has_eaten = 1;
+		core->philos[i]->wait = true;
 	return (0);
 }
 
@@ -75,7 +76,6 @@ int	fillcore(t_core *core, char **av)
 {
 	int	i;
 
-	i = -1;
 	core->num_of_philos = ph_atoi(av[1]);
 	core->time_to_die = ph_atoi(av[2]);
 	core->time_to_eat = ph_atoi(av[3]);
@@ -83,19 +83,19 @@ int	fillcore(t_core *core, char **av)
 	if (av[5])
 		core->eat_limit = ph_atoi(av[5]);
 	core->living_state = -1;
-	if (init_forks(core) == 1)
-		core->philos = malloc((core->num_of_philos + 1) * sizeof(t_philo *));
+	core->philos = malloc((core->num_of_philos + 1) * sizeof(t_philo *));
+	if (!core->philos)
+		return (1);
 	if (pthread_mutex_init(&core->death_lock, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&core->write_lock, NULL) != 0)
 		return (1);
-	if (!core->philos)
-		return (1);
+	i = -1;
 	while (++i < core->num_of_philos)
-		if (init_philos(core, i) == 1)
+		if (init_philos(core, i))
 			return (1);
 	core->philos[i] = NULL;
-	if (init_threads(core) == 1)
+	if (init_threads(core))
 			return (1);
 	return (0);
 }
@@ -106,7 +106,7 @@ int	main(int ac, char **av)
 	int			i;
 	pthread_t	monitor;
 
-	if (checker(ac, av) == 1)
+	if (checker(ac, av))
 		return (1);
 	core = malloc(sizeof(t_core));
 	if (!core)

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/02 18:30:38 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/03 17:20:42 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	activity_logger(t_philo *philo, char *in)
 static void	think(t_philo *philo)
 {
 	activity_logger(philo, "is thinking");
-	philo->has_thought = 1;
+	philo->has_thought = true;
 }
 
-void	sleep(t_core *core, t_philo *philo)
+static void	sleep(t_core *core, t_philo *philo)
 {
 	activity_logger(philo, "is sleeping");
 	if (!checkdeath(philo, core))
 		ph_usleep(core->time_to_sleep);
-	philo->has_eaten = 0;
-	philo->has_thought = 0;
+	philo->has_eaten = false;
+	philo->has_thought = false;
 }
 
 static void	eat(t_core *core, t_philo *philo)
@@ -47,13 +47,12 @@ static void	eat(t_core *core, t_philo *philo)
 	if (!checkdeath(philo, core))
 	{
 		ph_usleep(core->time_to_eat);
-		philo->has_eaten = 1;
+		philo->has_eaten = true;
 		philo->last_meal = get_current_time();
 		philo->meals_eaten++;
 	}
 	pthread_mutex_unlock(&philo->r_fork);
 	pthread_mutex_unlock(&philo->l_fork);
-	philo->eating = 0;
 }
 
 void	*philo_brain(void *in)
@@ -65,6 +64,11 @@ void	*philo_brain(void *in)
 	{
 		if (!checkhunger(philo, philo->core))
 			break ;
+		if (philo->wait == true)
+		{
+			ph_usleep(5);
+			philo->wait = false;
+		}
 		if (checkdeath(philo, philo->core))
 			break ;
 		if (!philo->has_thought)
