@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:09:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/02 16:28:00 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:19:56 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	checkdeath(t_philo *philo, t_core *core)
 int	checkhunger(t_philo *philo, t_core *core)
 {
 	if (philo->meals_eaten >= core->eat_limit)
+	{
+		philo->is_done = true;
 		return (0);
+	}
 	return (1);
 }

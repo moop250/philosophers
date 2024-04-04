@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/03 17:20:42 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:45:45 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void	eat(t_core *core, t_philo *philo)
 		ph_usleep(core->time_to_eat);
 		philo->has_eaten = true;
 		philo->last_meal = get_current_time();
-		philo->meals_eaten++;
+		if (core->eat_limit > 0)
+			philo->meals_eaten++;
 	}
 	pthread_mutex_unlock(&philo->r_fork);
 	pthread_mutex_unlock(&philo->l_fork);

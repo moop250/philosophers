@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/03 17:12:36 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:20:38 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	free_core(t_core *core)
 		while (core->philos[++i])
 		{
 			if (core->philos[i]->r_fork)
-				pthread_mutex_destroy(core->philos[i]->r_fork)
+				pthread_mutex_destroy(core->philos[i]->r_fork);
+			if (core->philos[i]->r_fork)
+				pthread_mutex_destroy(core->philos[i]->meal_lock);
 			free(core->philos[i]);
 		}
 		free(core->philos);
@@ -54,6 +56,7 @@ int	init_philos(t_core *core, int i)
 		core->philos[i]->wait = false;
 	else
 		core->philos[i]->wait = true;
+	core->philos[i]->is_done = false;
 	return (0);
 }
 
@@ -80,6 +83,7 @@ int	fillcore(t_core *core, char **av)
 	core->time_to_die = ph_atoi(av[2]);
 	core->time_to_eat = ph_atoi(av[3]);
 	core->time_to_sleep = ph_atoi(av[4]);
+	core->eat_limit = 0;
 	if (av[5])
 		core->eat_limit = ph_atoi(av[5]);
 	core->living_state = -1;
@@ -112,10 +116,15 @@ int	main(int ac, char **av)
 	if (!core)
 		return (2);
 	if (fillcore(core, av))
+	{
 		free_core(core);
+		return (3);
+	}
+	pthread_create(&monitor, NULL, &ph_monitor, (void *) &core);
 	i = -1;
 	while (core->philos[++i])
 		pthread_join(core->philos[i]->thread, NULL);
+	pthread_join(monitor, NULL);
 	free_core(core);
 	return (0);
 }
