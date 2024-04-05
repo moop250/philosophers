@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 22:34:21 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:03:29 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static void	kill_philos(t_core *core, t_philo *philo)
 {
 	pthread_mutex_lock(&core->death_lock);
 	pthread_mutex_lock(&core->write_lock);
+	if (core->living_state < 0)
+		printf("%zu %i has died\n", get_current_time() - core->start_time,
+			philo->id);
 	core->living_state = philo->id;
-	printf("%zu %i has died\n", get_current_time() - core->start_time,
-		philo->id);
 	pthread_mutex_unlock(&core->write_lock);
 	pthread_mutex_unlock(&core->death_lock);
 }
@@ -37,8 +38,13 @@ static int	check_starving(t_philo *philo)
 
 static int	check_done(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->hunger_lock);	
 	if (philo->is_done == true)
+	{
+		pthread_mutex_unlock(&philo->hunger_lock);
 		return (1);
+	}
+	pthread_mutex_unlock(&philo->hunger_lock);
 	return (0);
 }
 
@@ -52,6 +58,13 @@ void	*ph_monitor(void *in)
 	{
 		if (core->living_state >= 0)
 			break ;
+		pthread_mutex_lock(&core->monitor_lock);
+		if (core->finished == true)
+		{
+			pthread_mutex_unlock(&core->monitor_lock);
+			break ;
+		}
+		pthread_mutex_unlock(&core->monitor_lock);
 		i = -1;
 		while (core->philos[++i])
 		{
@@ -62,5 +75,6 @@ void	*ph_monitor(void *in)
 		}
 		ph_usleep(1);
 	}
+	printf("beoken\n");
 	return (0);
 }

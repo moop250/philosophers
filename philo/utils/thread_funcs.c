@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 22:38:54 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 23:59:50 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,13 @@ void	*philo_brain(void *in)
 		}
 		if (checkdeath(philo->core))
 			break ;
-		if (!philo->has_eaten)
-			eat(philo->core, philo);
-		else if (!philo->has_thought)
+		if (!philo->has_thought)
 			think(philo);
+		else if (!philo->has_eaten)
+			eat(philo->core, philo);
 		else
 			ph_sleep(philo->core, philo);
 	}
-	return (NULL);
+	printf("exited\n");
+	return (0);
 }

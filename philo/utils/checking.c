@@ -6,13 +6,13 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:49:48 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 14:18:21 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 23:38:53 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int	basic_checker(int ac, char *av)
+static int	basic_checker(int ac, char *av)
 {
 	if (ac < 5)
 	{

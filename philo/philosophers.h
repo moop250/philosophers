@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 22:27:42 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 23:15:47 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ typedef struct s_core
 	size_t			start_time;
 	int				eat_limit;
 	int				living_state;
+	bool			finished;
 	t_philo			**philos;
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	write_lock;
+	pthread_mutex_t	monitor_lock;
 }					t_core;
 
 // Custom Functions
@@ -73,5 +75,6 @@ int		checkdeath(t_core *core);
 int		checkhunger(t_philo *philo, t_core *core);
 void	*ph_monitor(void *in);
 void	activity_logger(t_philo *philo, char *in);
+int		fillcore(t_core *core, char **av);
 
 #endif

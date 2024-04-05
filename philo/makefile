@@ -99,6 +99,7 @@ SUPP = utils/checking.c \
 		utils/monitor.c \
 		utils/thread_checkers.c \
 		utils/thread_funcs.c \
+		utils/initialization.c \
 
 %.o: %.c
 	@printf "\tCompiling $<...\r"
