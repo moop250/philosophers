@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 18:22:59 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 22:27:42 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_philo
 	int				has_eaten;
 	int				has_thought;
 	size_t			last_meal;
-	size_t			start_time;
 	int				meals_eaten;
 	int				living_state;
 	bool			wait;
@@ -43,6 +42,7 @@ typedef struct s_philo
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	hunger_lock;
+	pthread_mutex_t	lml;
 	t_core			*core;
 }					t_philo;
 
@@ -52,6 +52,7 @@ typedef struct s_core
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
+	size_t			start_time;
 	int				eat_limit;
 	int				living_state;
 	t_philo			**philos;

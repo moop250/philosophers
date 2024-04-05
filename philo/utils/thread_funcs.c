@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 19:33:46 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 22:38:54 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	activity_logger(t_philo *philo, char *in)
 	pthread_mutex_lock(&philo->core->death_lock);
 	pthread_mutex_lock(&philo->core->write_lock);
 		if (philo->core->living_state < 0)
-			printf("%zu %i %s\n", get_current_time() - philo->start_time,
+			printf("%zu %i %s\n", get_current_time() - philo->core->start_time,
 				philo->id, in);
 	pthread_mutex_unlock(&philo->core->write_lock);
 	pthread_mutex_unlock(&philo->core->death_lock);
@@ -51,7 +51,9 @@ static void	eat(t_core *core, t_philo *philo)
 	{
 		ph_usleep(core->time_to_eat);
 		philo->has_eaten = true;
+		pthread_mutex_lock(&philo->lml);
 		philo->last_meal = get_current_time();
+		pthread_mutex_unlock(&philo->lml);
 		if (core->eat_limit > 0)
 			philo->meals_eaten++;
 	}

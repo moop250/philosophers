@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 18:34:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 22:28:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_core(t_core *core)
 				pthread_mutex_destroy(&core->philos[i]->meal_lock);
 			if (&core->philos[i]->hunger_lock)
 				pthread_mutex_destroy(&core->philos[i]->hunger_lock);
+			if (&core->philos[i]->lml)
+				pthread_mutex_destroy(&core->philos[i]->lml);
 			free(core->philos[i]);
 		}
 		free(core->philos);
@@ -72,8 +74,7 @@ int	init_threads(t_core *core)
 	i = -1;
 	while (core->philos[++i])
 	{
-		core->philos[i]->start_time = get_current_time();
-		core->philos[i]->last_meal = core->philos[i]->start_time;
+		core->philos[i]->last_meal = get_current_time();
 		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
 			(void *)core->philos[i]);
 	}
@@ -104,6 +105,7 @@ int	fillcore(t_core *core, char **av)
 		if (init_philos(core, i))
 			return (1);
 	core->philos[i] = NULL;
+	core->start_time = get_current_time();
 	if (init_threads(core))
 			return (1);
 	return (0);
