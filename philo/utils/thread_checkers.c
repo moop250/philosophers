@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:09:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:15:54 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:39:12 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	checkhunger(t_philo *philo, t_core *core)
 	if (philo->meals_eaten >= core->eat_limit && core->eat_limit != 0)
 	{
 		philo->is_done = true;
-		/* activity_logger(philo, "has finished eating"); */
+		activity_logger(philo, "has finished eating");
 		pthread_mutex_unlock(&philo->hunger_lock);
 		return (0);
 	}

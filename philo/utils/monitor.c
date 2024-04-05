@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:14:58 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:53:06 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	check_starving(t_philo *philo)
 
 static int	check_done(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->hunger_lock);	
+	pthread_mutex_lock(&philo->hunger_lock);
 	if (philo->is_done == true)
 	{
 		pthread_mutex_unlock(&philo->hunger_lock);
@@ -48,10 +48,24 @@ static int	check_done(t_philo *philo)
 	return (0);
 }
 
+static int	checking(t_core *core)
+{
+	int		i;
+
+	i = -1;
+	while (core->philos[++i])
+	{
+		if (checkdeath(core))
+			return (0);
+		if (!check_done(core->philos[i]) && check_starving(core->philos[i]))
+			kill_philos(core, core->philos[i]);
+	}
+	return (1);
+}
+
 void	*ph_monitor(void *in)
 {
 	t_core	*core;
-	int		i;
 
 	core = (t_core *)in;
 	while (true)
@@ -65,14 +79,8 @@ void	*ph_monitor(void *in)
 			break ;
 		}
 		pthread_mutex_unlock(&core->monitor_lock);
-		i = -1;
-		while (core->philos[++i])
-		{
-			if (checkdeath(core))
-				return (0);
-			if (!check_done(core->philos[i]) && check_starving(core->philos[i]))
-				kill_philos(core, core->philos[i]);
-		}
+		if (!checking(core))
+			return (0);
 		ph_usleep(1);
 	}
 	return (0);

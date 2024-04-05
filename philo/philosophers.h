@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 23:15:47 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:33:24 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 
 // Structs
 
-struct				s_philo;
-typedef struct		s_core t_core;
+/* Forward declarations */
+typedef struct s_philo	t_philo;
+typedef struct s_core	t_core;
 
 typedef struct s_philo
 {

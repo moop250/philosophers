@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:05:49 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:37:44 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	init_threads(t_core *core)
 	return (0);
 }
 
-static int init_mutecies(t_core *core)
+static int	init_mutecies(t_core *core)
 {
 	if (pthread_mutex_init(&core->death_lock, NULL) != 0)
 		return (1);
@@ -86,6 +86,6 @@ int	fillcore(t_core *core, char **av)
 	core->philos[i] = NULL;
 	core->start_time = get_current_time();
 	if (init_threads(core))
-			return (1);
+		return (1);
 	return (0);
 }

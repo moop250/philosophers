@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:49:48 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 23:38:53 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:36:12 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	basic_checker(int ac, char *av)
 		write(2, "philo error: too many args\n", 28);
 		return (1);
 	}
-	else if(atoi(av) > 200)
+	else if (atoi(av) > 200)
 	{
 		write(2, "philo error: too many philosophers\n", 36);
 		return (1);
@@ -36,6 +36,7 @@ int	checker(int ac, char **av)
 {
 	int	i;
 	int	a;
+
 	if (basic_checker(ac, av[1]) == 1)
 		return (1);
 	a = 0;

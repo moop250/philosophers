@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:54:00 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 18:19:15 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:35:26 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ph_usleep(size_t milliseconds)
 
 size_t	get_current_time(void)
 {
-	struct timeval now;
+	struct timeval	now;
 
 	gettimeofday(&now, NULL);
 	return (now.tv_sec * 1000 + now.tv_usec / 1000);
