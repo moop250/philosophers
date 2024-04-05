@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:03:29 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:14:58 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ void	*ph_monitor(void *in)
 		}
 		ph_usleep(1);
 	}
-	printf("beoken\n");
 	return (0);
 }

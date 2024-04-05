@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 23:59:50 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/06 00:14:43 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,5 @@ void	*philo_brain(void *in)
 		else
 			ph_sleep(philo->core, philo);
 	}
-	printf("exited\n");
 	return (0);
 }
