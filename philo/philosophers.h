@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/04 14:18:43 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 18:22:59 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 // Structs
+
+struct				s_philo;
+typedef struct		s_core t_core;
 
 typedef struct s_philo
 {
@@ -38,6 +42,7 @@ typedef struct s_philo
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	hunger_lock;
 	t_core			*core;
 }					t_philo;
 
@@ -63,8 +68,9 @@ void	*philo_brain(void *in);
 size_t	get_current_time(void);
 int		ph_usleep(size_t milliseconds);
 int		is_even(int in);
-int		checkdeath(t_philo *philo, t_core *core);
+int		checkdeath(t_core *core);
 int		checkhunger(t_philo *philo, t_core *core);
-void	*ph_monitor(t_core *core);
+void	*ph_monitor(void *in);
+void	activity_logger(t_philo *philo, char *in);
 
 #endif

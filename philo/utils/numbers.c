@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:30:04 by hlibine           #+#    #+#             */
-/*   Updated: 2024/03/25 14:17:20 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 12:17:57 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	isdigit(int c)
 		return (0);
 }
 
-static int	isspace(char c)
+static int	ph_isspace(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
@@ -50,7 +50,7 @@ int	ph_atoi(const char *str)
 	n = 1;
 	if (!str[0])
 		return (0);
-	while (isspace(str[i]) == 1)
+	while (ph_isspace(str[i]) == 1)
 		i++;
 	while (str[i] == '+' || str[i] == '-')
 	{

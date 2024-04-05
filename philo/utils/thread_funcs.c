@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/04 13:45:45 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:33:46 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	activity_logger(t_philo *philo, char *in)
 {
-	pthreaf_mutex_lock(&philo->core->write_lock);
 	pthread_mutex_lock(&philo->core->death_lock);
+	pthread_mutex_lock(&philo->core->write_lock);
 		if (philo->core->living_state < 0)
-			printf("%zu %i %s\n", get_current_time() - philo->start_time, in);
-	pthread_mutex_unlock(&philo->core->death_lock);
+			printf("%zu %i %s\n", get_current_time() - philo->start_time,
+				philo->id, in);
 	pthread_mutex_unlock(&philo->core->write_lock);
+	pthread_mutex_unlock(&philo->core->death_lock);
 }
 
 static void	think(t_philo *philo)
@@ -28,10 +29,10 @@ static void	think(t_philo *philo)
 	philo->has_thought = true;
 }
 
-static void	sleep(t_core *core, t_philo *philo)
+static void	ph_sleep(t_core *core, t_philo *philo)
 {
 	activity_logger(philo, "is sleeping");
-	if (!checkdeath(philo, core))
+	if (!checkdeath(core))
 		ph_usleep(core->time_to_sleep);
 	philo->has_eaten = false;
 	philo->has_thought = false;
@@ -39,12 +40,14 @@ static void	sleep(t_core *core, t_philo *philo)
 
 static void	eat(t_core *core, t_philo *philo)
 {
+	if (core->num_of_philos == 1)
+		return ;
 	pthread_mutex_lock(&philo->r_fork);
 	activity_logger(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->l_fork);
 	activity_logger(philo, "has taken a fork");
 	activity_logger(philo, "is eating");
-	if (!checkdeath(philo, core))
+	if (!checkdeath(core))
 	{
 		ph_usleep(core->time_to_eat);
 		philo->has_eaten = true;
@@ -70,14 +73,14 @@ void	*philo_brain(void *in)
 			ph_usleep(5);
 			philo->wait = false;
 		}
-		if (checkdeath(philo, philo->core))
+		if (checkdeath(philo->core))
 			break ;
-		if (!philo->has_thought)
-			think(philo);
-		else if (!philo->has_eaten)
+		if (!philo->has_eaten)
 			eat(philo->core, philo);
+		else if (!philo->has_thought)
+			think(philo);
 		else
-			ph_sleep(philo->core->time_to_sleep);
+			ph_sleep(philo->core, philo);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/05 11:39:56 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 19:32:07 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 static void	kill_philos(t_core *core, t_philo *philo)
 {
-	
+	pthread_mutex_lock(&core->death_lock);
+	pthread_mutex_lock(&core->write_lock);
+	core->living_state = philo->id;
+	printf("%zu %i has died\n", get_current_time() - philo->start_time,
+		philo->id);
+	pthread_mutex_unlock(&core->death_lock);
+	pthread_mutex_unlock(&core->write_lock);
 }
 
 static int	check_starving(t_philo *philo)
@@ -44,9 +50,9 @@ void	*ph_monitor(void *in)
 		i = -1;
 		while (core->philos[++i])
 		{
-			if (!checkdeath(core->philos[i], core))
+			if (!checkdeath(core))
 				return (0);
-			if (!check_done(core->philos[i]) && check_straving(core->philos[i]))
+			if (!check_done(core->philos[i]) && check_starving(core->philos[i]))
 				kill_philos(core, core->philos[i]);
 		}
 		ph_usleep(1);

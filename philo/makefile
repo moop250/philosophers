@@ -95,6 +95,10 @@ SRCS = philosophers.c \
 
 SUPP = utils/checking.c \
 		utils/numbers.c \
+		utils/helpers.c \
+		utils/monitor.c \
+		utils/thread_checkers.c \
+		utils/thread_funcs.c \
 
 %.o: %.c
 	@printf "\tCompiling $<...\r"

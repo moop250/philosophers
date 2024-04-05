@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:49:48 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/04 13:54:07 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/05 14:18:21 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	basic_checker(int ac, char *av)
 {
-	if (ac < 6)
+	if (ac < 5)
 	{
 		write(2, "philo error: not enough args\n", 30);
 		return (1);
 	}
-	else if (ac > 7)
+	else if (ac > 6)
 	{
 		write(2, "philo error: too many args\n", 28);
 		return (1);
@@ -49,7 +49,7 @@ int	checker(int ac, char **av)
 				write(2, "philo error: non numeric argument\n", 35);
 				return (1);
 			}
-			if (av[a][0] == '0' && av[a][1] == '\0' && a != 6)
+			if (av[a][0] == '0' && av[a][1] == '\0' && a != 5)
 			{
 				write(2, "philo error: number smaller than 1 entered\n", 44);
 				return (1);
