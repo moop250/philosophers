@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:37:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/08 14:36:10 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	init_philos(t_core *core, int i)
 	if (pthread_mutex_init(&core->philos[i]->r_fork, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&core->philos[i]->hunger_lock, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&core->philos[i]->lml, NULL) != 0)
 		return (1);
 	if (i != 0)
 		core->philos[i]->l_fork = core->philos[i - 1]->r_fork;
@@ -58,6 +60,8 @@ static int	init_mutecies(t_core *core)
 	if (pthread_mutex_init(&core->death_lock, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&core->write_lock, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&core->monitor_lock, NULL) != 0)
 		return (1);
 	return (0);
 }

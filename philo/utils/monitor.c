@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:53:06 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/08 15:07:54 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static void	kill_philos(t_core *core, t_philo *philo)
 
 static int	check_starving(t_philo *philo)
 {
+	size_t	last_meal;
+
 	pthread_mutex_lock(&philo->lml);
-	if (get_current_time() - philo->last_meal <= philo->core->time_to_die)
-	{
-		pthread_mutex_unlock(&philo->lml);
-		return (0);
-	}
+	last_meal = philo->last_meal;
 	pthread_mutex_unlock(&philo->lml);
+	if (get_current_time() - last_meal <= philo->core->time_to_die)
+		return (0);
 	return (1);
 }
 
