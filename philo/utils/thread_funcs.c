@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:37:05 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:55:05 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*philo_brain(void *in)
 			break ;
 		if (philo->wait == true)
 		{
-			ph_usleep(5);
+			ph_usleep(1);
 			philo->wait = false;
 		}
 		if (checkdeath(philo->core))

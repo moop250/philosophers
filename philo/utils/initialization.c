@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/08 14:36:10 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:52:35 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static int	init_philos(t_core *core, int i)
 		return (1);
 	if (pthread_mutex_init(&core->philos[i]->lml, NULL) != 0)
 		return (1);
-	if (i != 0)
-		core->philos[i]->l_fork = core->philos[i - 1]->r_fork;
-	else if (i == core->num_of_philos - 1)
+	if (i == core->num_of_philos - 1)
 		core->philos[0]->l_fork = core->philos[i]->r_fork;
+	else if (i != 0)
+		core->philos[i]->l_fork = core->philos[i - 1]->r_fork;
 	core->philos[i]->core = core;
 	core->philos[i]->living_state = -1;
 	core->philos[i]->has_thought = false;
@@ -44,11 +44,14 @@ static int	init_philos(t_core *core, int i)
 static int	init_threads(t_core *core)
 {
 	int	i;
+	size_t	start_time;
 
 	i = -1;
+	start_time = get_current_time();
+	core->start_time = start_time;
 	while (core->philos[++i])
 	{
-		core->philos[i]->last_meal = get_current_time();
+		core->philos[i]->last_meal = start_time;
 		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
 			(void *)core->philos[i]);
 	}
@@ -88,7 +91,6 @@ int	fillcore(t_core *core, char **av)
 		if (init_philos(core, i))
 			return (1);
 	core->philos[i] = NULL;
-	core->start_time = get_current_time();
 	if (init_threads(core))
 		return (1);
 	return (0);
