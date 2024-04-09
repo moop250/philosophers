@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 18:19:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:36:25 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	init_philos(t_core *core, int i)
 static int	init_threads(t_core *core)
 {
 	int	i;
-	size_t	start_time;
+	long long	start_time;
 
 	i = -1;
 	core->initialized = false;

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 18:31:19 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:35:11 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_philo
 	int				id;
 	int				has_eaten;
 	int				has_thought;
-	atomic_size_t	last_meal;
+	atomic_llong	last_meal;
 	int				meals_eaten;
 	int				living_state;
 	bool			wait;
@@ -50,10 +50,10 @@ typedef struct s_philo
 typedef struct s_core
 {
 	int				num_of_philos;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
-	size_t			start_time;
+	long long		time_to_die;
+	long long		time_to_eat;
+	long long		time_to_sleep;
+	long long		start_time;
 	int				eat_limit;
 	atomic_int		living_state;
 	t_philo			**philos;
