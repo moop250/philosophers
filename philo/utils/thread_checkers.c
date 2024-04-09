@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:09:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 17:03:17 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 19:48:22 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	checkhunger(t_philo *philo, t_core *core)
 	{
 		philo->is_done = true;
 		pthread_mutex_unlock(&philo->hunger_lock);
-		activity_logger(philo, "has finished eating");
 		return (0);
 	}
 	pthread_mutex_unlock(&philo->hunger_lock);

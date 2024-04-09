@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 18:40:09 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 19:46:45 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ static void	eat(t_core *core, t_philo *philo)
 void	*philo_brain(void *in)
 {
 	t_philo	*philo;
-
+	//use thread join as starting point
 	philo = (t_philo *) in;
-	while (philo->core->initialized == false)
-		;
+	philo->last_meal = get_current_time();
 	if (philo->wait == true)
 		{
 			ph_usleep(2000);

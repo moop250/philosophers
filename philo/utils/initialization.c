@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 18:36:25 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 19:42:08 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,14 @@ static int	init_philos(t_core *core, int i)
 static int	init_threads(t_core *core)
 {
 	int	i;
-	long long	start_time;
 
 	i = -1;
-	core->initialized = false;
-	start_time = get_current_time();
-	core->start_time = start_time;
+	core->start_time = get_current_time();
 	while (core->philos[++i])
 	{
-		core->philos[i]->last_meal = start_time;
 		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
 			(void *)core->philos[i]);
 	}
-	core->initialized = true;
 	return (0);
 }
 
@@ -76,7 +71,6 @@ int	fillcore(t_core *core, char **av)
 	if (pthread_mutex_init(&core->write_lock, NULL) != 0)
 		return (1);
 	i = -1;
-/* 	init_forks(core); */
 	while (++i < core->num_of_philos)
 		if (init_philos(core, i))
 			return (1);
