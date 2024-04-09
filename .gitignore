@@ -2,3 +2,6 @@ philo/philo
 philo/philo.dSYM/Contents/Resources/DWARF/philo
 philo/philo.dSYM/Contents/Info.plist
 philo/log
+philo/log.txt
+philo/.DS_Store
+philo/delay_o_meter.py

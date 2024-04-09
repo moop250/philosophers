@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/08 11:58:21 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:03:03 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	free_philos(t_core *core)
 		pthread_mutex_destroy(&core->philos[i]->r_fork);
 		pthread_mutex_destroy(&core->philos[i]->meal_lock);
 		pthread_mutex_destroy(&core->philos[i]->hunger_lock);
-		pthread_mutex_destroy(&core->philos[i]->lml);
 		free(core->philos[i]);
 	}
 	free(core->philos);
@@ -33,9 +32,7 @@ static void	free_core(t_core *core)
 	if (core->philos)
 	{
 		free_philos(core);
-		pthread_mutex_destroy(&core->death_lock);
 		pthread_mutex_destroy(&core->write_lock);
-		pthread_mutex_destroy(&core->monitor_lock);
 	}
 	free(core);
 }
@@ -61,9 +58,7 @@ int	main(int ac, char **av)
 	i = -1;
 	while (core->philos[++i])
 		pthread_join(core->philos[i]->thread, NULL);
-	pthread_mutex_lock(&core->monitor_lock);
 	core->finished = true;
-	pthread_mutex_unlock(&core->monitor_lock);
 	pthread_join(monitor, NULL);
 	free_core(core);
 	return (0);

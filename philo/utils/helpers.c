@@ -6,28 +6,28 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:54:00 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/06 00:35:26 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:29:53 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-int	ph_usleep(size_t milliseconds)
+int	ph_usleep(long long microseconds)
 {
-	size_t	start;
+	long long	start;
 
 	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
+	while ((get_current_time() - start) < microseconds)
 		usleep(500);
 	return (0);
 }
 
-size_t	get_current_time(void)
+long long	get_current_time(void)
 {
 	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	return (now.tv_sec * 1000 + now.tv_usec / 1000);
+	return (now.tv_sec * 1000000 + now.tv_usec);
 }
 
 int	is_even(int in)

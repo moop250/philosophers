@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/08 17:16:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:31:31 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	activity_logger(t_philo *philo, char *in)
 {
-	pthread_mutex_lock(&philo->core->death_lock);
 	pthread_mutex_lock(&philo->core->write_lock);
 	if (philo->core->living_state < 0)
-		printf("%zu %i %s\n", get_current_time() - philo->core->start_time,
-			philo->id, in);
+		printf("%llu %i %s\n", (get_current_time() / 1000)
+			- (philo->core->start_time / 1000), philo->id, in);
 	pthread_mutex_unlock(&philo->core->write_lock);
-	pthread_mutex_unlock(&philo->core->death_lock);
 }
 
 static void	think(t_philo *philo)
 {
 	activity_logger(philo, "is thinking");
+	ph_usleep(1000);
 	philo->has_thought = true;
 }
 
@@ -51,9 +50,7 @@ static void	eat(t_core *core, t_philo *philo)
 	{
 		ph_usleep(core->time_to_eat);
 		philo->has_eaten = true;
-		pthread_mutex_lock(&philo->lml);
 		philo->last_meal = get_current_time();
-		pthread_mutex_unlock(&philo->lml);
 		if (core->eat_limit > 0)
 			philo->meals_eaten++;
 	}
@@ -66,9 +63,11 @@ void	*philo_brain(void *in)
 	t_philo	*philo;
 
 	philo = (t_philo *) in;
+	while (philo->core->initialized == false)
+		;
 	if (philo->wait == true)
 		{
-			ph_usleep(1);
+			ph_usleep(1000);
 			philo->wait = false;
 		}
 	while (true)
