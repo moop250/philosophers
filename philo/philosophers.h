@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 16:10:35 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:28:12 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_core
 	atomic_int		living_state;
 	t_philo			**philos;
 	pthread_mutex_t	write_lock;
-	atomic_bool		initialized;
 	atomic_bool		finished;
 }					t_core;
 

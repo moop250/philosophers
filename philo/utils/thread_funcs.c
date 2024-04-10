@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 16:29:50 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:27:44 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,16 @@ static void	eat(t_core *core, t_philo *philo)
 		if (core->eat_limit > 0)
 			philo->meals_eaten++;
 	}
-	pthread_mutex_unlock(&philo->r_fork);
-	pthread_mutex_unlock(philo->l_fork);
+	if (philo->id != 0)
+	{
+		pthread_mutex_unlock(&philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(&philo->r_fork);
+	}
 }
 
 void	*philo_brain(void *in)
@@ -72,8 +80,6 @@ void	*philo_brain(void *in)
 	t_philo	*philo;
 
 	philo = (t_philo *) in;
-	while (!philo->core->initialized)
-		;
 	if (philo->wait == true)
 		{
 			ph_usleep(5);

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 16:12:39 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:29:04 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ int	fillcore(t_core *core, char **av)
 		return (1);
 	if (init_forks(core))
 		return (1);
-	core->initialized = false;
 	init_threads(core);
-	core->initialized = true;
 	return (0);
 }
