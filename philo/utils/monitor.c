@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 15:36:53 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:47:56 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int	check_starving(t_philo *philo)
 {
 	if (get_current_time() - philo->last_meal <= philo->core->time_to_die || philo->wait == true)
 		return (0);
-	printf("im here\n");
 	return (1);
 }
 

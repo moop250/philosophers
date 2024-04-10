@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 15:27:40 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:49:06 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	*init_threads(t_core *core)
 	core->start_time = get_current_time();
 	while (core->philos[++i])
 	{
+		core->philos[i]->last_meal = get_current_time();
 		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
 			(void *)core->philos[i]);
 	}
