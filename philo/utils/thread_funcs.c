@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 15:02:40 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:34:55 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void	*philo_brain(void *in)
 	t_philo	*philo;
 
 	philo = (t_philo *) in;
-	philo->last_meal = get_current_time();
 	if (philo->wait == true)
 		{
-			ph_usleep(1);
+			ph_usleep(5);
 			philo->wait = false;
 		}
+	philo->last_meal = get_current_time();
 	while (true)
 	{
 		if (!checkhunger(philo, philo->core))

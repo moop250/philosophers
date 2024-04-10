@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 13:56:54 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:37:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_philo
 	atomic_llong	last_meal;
 	int				meals_eaten;
 	int				living_state;
-	bool			wait;
-	bool			is_done;
+	atomic_bool		wait;
+	atomic_bool		is_done;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	meal_lock;
