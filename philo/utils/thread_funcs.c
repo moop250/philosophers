@@ -6,20 +6,11 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 15:48:39 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:29:50 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
-
-void	activity_logger(t_philo *philo, char *in)
-{
-	pthread_mutex_lock(&philo->core->write_lock);
-	if (philo->core->living_state < 0)
-		printf("%llu %i %s\n", (get_current_time())
-			- (philo->core->start_time), philo->id, in);
-	pthread_mutex_unlock(&philo->core->write_lock);
-}
 
 static void	think(t_philo *philo)
 {
@@ -37,14 +28,32 @@ static void	ph_sleep(t_core *core, t_philo *philo)
 	philo->has_thought = false;
 }
 
+static void	eat_lock(t_philo *philo, int in)
+{
+	if (in == 0)
+	{
+		pthread_mutex_lock(philo->l_fork);
+		activity_logger(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->r_fork);
+		activity_logger(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->r_fork);
+		activity_logger(philo, "has taken a fork");
+		pthread_mutex_lock(philo->l_fork);
+		activity_logger(philo, "has taken a fork");
+	}
+}
+
 static void	eat(t_core *core, t_philo *philo)
 {
 	if (core->num_of_philos == 1)
 		return ;
-	pthread_mutex_lock(&philo->r_fork);
-	activity_logger(philo, "has taken a fork");
-	pthread_mutex_lock(philo->l_fork);
-	activity_logger(philo, "has taken a fork");
+	if (philo->id != 0)
+		eat_lock(philo, 0);
+	else
+		eat_lock(philo, 1);
 	activity_logger(philo, "is eating");
 	if (!checkdeath(core))
 	{
@@ -63,6 +72,8 @@ void	*philo_brain(void *in)
 	t_philo	*philo;
 
 	philo = (t_philo *) in;
+	while (!philo->core->initialized)
+		;
 	if (philo->wait == true)
 		{
 			ph_usleep(5);
