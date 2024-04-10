@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 18:35:11 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 13:56:54 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_philo
 	int				living_state;
 	bool			wait;
 	bool			is_done;
-	pthread_mutex_t	l_fork;
+	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	hunger_lock;
@@ -60,6 +60,7 @@ typedef struct s_core
 	pthread_mutex_t	write_lock;
 	atomic_bool		initialized;
 	atomic_bool		finished;
+	pthread_t		initializer;
 }					t_core;
 
 // Custom Functions

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 19:46:45 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:02:40 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	activity_logger(t_philo *philo, char *in)
 {
 	pthread_mutex_lock(&philo->core->write_lock);
 	if (philo->core->living_state < 0)
-		printf("%llu %i %s\n", (get_current_time() / 1000)
-			- (philo->core->start_time / 1000), philo->id, in);
+		printf("%llu %i %s\n", (get_current_time())
+			- (philo->core->start_time), philo->id, in);
 	pthread_mutex_unlock(&philo->core->write_lock);
 }
 
 static void	think(t_philo *philo)
 {
 	activity_logger(philo, "is thinking");
-	ph_usleep(1000);
+	ph_usleep(1);
 	philo->has_thought = true;
 }
 
@@ -43,7 +43,7 @@ static void	eat(t_core *core, t_philo *philo)
 		return ;
 	pthread_mutex_lock(&philo->r_fork);
 	activity_logger(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->l_fork);
+	pthread_mutex_lock(philo->l_fork);
 	activity_logger(philo, "has taken a fork");
 	activity_logger(philo, "is eating");
 	if (!checkdeath(core))
@@ -55,18 +55,18 @@ static void	eat(t_core *core, t_philo *philo)
 			philo->meals_eaten++;
 	}
 	pthread_mutex_unlock(&philo->r_fork);
-	pthread_mutex_unlock(&philo->l_fork);
+	pthread_mutex_unlock(philo->l_fork);
 }
 
 void	*philo_brain(void *in)
 {
 	t_philo	*philo;
-	//use thread join as starting point
+
 	philo = (t_philo *) in;
 	philo->last_meal = get_current_time();
 	if (philo->wait == true)
 		{
-			ph_usleep(2000);
+			ph_usleep(1);
 			philo->wait = false;
 		}
 	while (true)

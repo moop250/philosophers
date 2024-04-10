@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 18:31:28 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:00:43 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	kill_philos(t_core *core, t_philo *philo)
 {
 	pthread_mutex_lock(&core->write_lock);
 	if (core->living_state < 0)
-		printf("%llu %i has died\n", (get_current_time() / 1000)
-			- (core->start_time / 1000), philo->id);
+		printf("%llu %i has died\n", (get_current_time())
+			- (core->start_time), philo->id);
 	core->living_state = philo->id;
 	pthread_mutex_unlock(&core->write_lock);
 }
