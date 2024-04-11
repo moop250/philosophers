@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 18:26:45 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:41:38 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	int				id;
 	int				has_eaten;
-	int				has_thought;
+	int				has_slept;
 	atomic_llong	last_meal;
 	int				meals_eaten;
 	int				living_state;

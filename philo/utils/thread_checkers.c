@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:09:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 17:31:09 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:46:23 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	checkdeath(t_core *core)
 int	checkhunger(t_philo *philo, t_core *core)
 {
 	pthread_mutex_lock(&philo->hunger_lock);
-	if (philo->meals_eaten > core->eat_limit && core->eat_limit != 0)
+	if (philo->meals_eaten >= core->eat_limit && core->eat_limit != 0)
 	{
 		philo->is_done = true;
 		pthread_mutex_unlock(&philo->hunger_lock);

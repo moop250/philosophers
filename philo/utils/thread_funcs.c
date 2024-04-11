@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 18:27:12 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:42:41 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	think(t_philo *philo)
 {
 	activity_logger(philo, "is thinking");
 	ph_usleep(philo->core->time_to_think);
-	philo->has_thought = true;
+	philo->has_eaten = false;
+	philo->has_slept = false;
 }
 
 static void	ph_sleep(t_core *core, t_philo *philo)
@@ -24,8 +25,7 @@ static void	ph_sleep(t_core *core, t_philo *philo)
 	activity_logger(philo, "is sleeping");
 	if (!checkdeath(core))
 		ph_usleep(core->time_to_sleep);
-	philo->has_eaten = false;
-	philo->has_thought = false;
+	philo->has_slept = true;
 }
 
 static void	eat_lock(t_philo *philo, int in)
@@ -93,10 +93,10 @@ void	*philo_brain(void *in)
 			break ;
 		if (!philo->has_eaten)
 			eat(philo->core, philo);
-		else if (!philo->has_thought)
-			think(philo);
-		else
+		else if (!philo->has_slept)
 			ph_sleep(philo->core, philo);
+		else
+			think(philo);
 	}
 	return (0);
 }

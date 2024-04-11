@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 18:33:32 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:41:48 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	init_philos(t_core *core)
 		core->philos[i]->id = i;
 		core->philos[i]->core = core;
 		core->philos[i]->living_state = -1;
-		core->philos[i]->has_thought = false;
+		core->philos[i]->has_slept = false;
 		core->philos[i]->has_eaten = false;
 		if (is_even(i))
 			core->philos[i]->wait = false;
