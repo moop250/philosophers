@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 17:29:04 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 13:33:47 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	init_philos(t_core *core)
 		if (!core->philos[i])
 			return (1);
 		if (pthread_mutex_init(&core->philos[i]->hunger_lock, NULL) != 0)
+			return (1);
+		if (pthread_mutex_init(&core->philos[i]->meal_lock, NULL) != 0)
 			return (1);
 		core->philos[i]->id = i;
 		core->philos[i]->core = core;
