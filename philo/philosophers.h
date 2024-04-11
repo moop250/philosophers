@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 16:58:52 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:26:45 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef struct s_core
 	long long		start_time;
 	long long		time_to_think;
 	int				eat_limit;
-	atomic_int		living_state;
+	pthread_mutex_t	living_lock;
+	int				living_state;
 	t_philo			**philos;
 	pthread_mutex_t	write_lock;
 	atomic_bool		finished;
@@ -68,8 +69,8 @@ int			checker(int ac, char **av);
 int			ph_atoi(const char *str);
 int			isdigit(int c);
 void		*philo_brain(void *in);
-long long	get_current_time(void);
-int			ph_usleep(long long microseconds);
+long long	get_current_time(int ms_us);
+void		 ph_usleep(long usec);
 int			is_even(int in);
 int			checkdeath(t_core *core);
 int			checkhunger(t_philo *philo, t_core *core);

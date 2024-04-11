@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:09:01 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 17:15:40 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:31:09 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	checkdeath(t_core *core)
 {
 	int	status;
 
+	pthread_mutex_lock(&core->living_lock);
 	status = core->living_state;
+	pthread_mutex_unlock(&core->living_lock);
 	if (status >= 0)
 		return (1);
 	return (0);

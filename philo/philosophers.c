@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:18 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/09 17:03:03 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:30:27 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	free_core(t_core *core)
 	{
 		free_philos(core);
 		pthread_mutex_destroy(&core->write_lock);
+		pthread_mutex_destroy(&core->living_lock);
 	}
 	free(core);
 }

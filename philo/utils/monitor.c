@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:11:15 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 15:47:56 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:24:53 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 static void	kill_philos(t_core *core, t_philo *philo)
 {
 	pthread_mutex_lock(&core->write_lock);
+	pthread_mutex_lock(&core->living_lock);
 	if (core->living_state < 0)
-		printf("%llu %i has died\n", (get_current_time())
-			- (core->start_time), philo->id);
+		printf("%llu %i has died\n", (get_current_time(1))
+			- (core->start_time) / 1000, philo->id);
 	core->living_state = philo->id;
+	pthread_mutex_unlock(&core->living_lock);
 	pthread_mutex_unlock(&core->write_lock);
 }
 
 static int	check_starving(t_philo *philo)
 {
-	if (get_current_time() - philo->last_meal <= philo->core->time_to_die || philo->wait == true)
+	if (get_current_time(2) - philo->last_meal <= philo->core->time_to_die || philo->wait == true)
 		return (0);
 	return (1);
 }
