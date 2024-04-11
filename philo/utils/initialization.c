@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 13:33:47 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:59:19 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	fillcore(t_core *core, char **av)
 	core->eat_limit = 0;
 	if (av[5])
 		core->eat_limit = ph_atoi(av[5]);
+	core->time_to_think = core->num_of_philos / 2;
 	core->living_state = -1;
 	core->philos = malloc((core->num_of_philos + 1) * sizeof(t_philo *));
 	if (!core->philos)

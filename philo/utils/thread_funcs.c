@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:51:28 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 17:27:44 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 17:01:24 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	think(t_philo *philo)
 {
 	activity_logger(philo, "is thinking");
-	ph_usleep(1);
+	ph_usleep(philo->core->time_to_think);
 	philo->has_thought = true;
 }
 

@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/10 17:28:12 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/11 16:58:52 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_core
 	long long		time_to_eat;
 	long long		time_to_sleep;
 	long long		start_time;
+	long long		time_to_think;
 	int				eat_limit;
 	atomic_int		living_state;
 	t_philo			**philos;
