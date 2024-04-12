@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/12 13:52:28 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:02:18 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	init_philos(t_core *core)
 		core->philos[i]->is_done = false;
 		core->philos[i]->meals_eaten = 0;
 	}
-	core->philos[core->num_of_philos] = NULL;
 	return (0);
 }
 
@@ -93,6 +92,7 @@ int	fillcore(t_core *core, char **av)
 		return (1);
 	if (init_philos(core))
 		return (1);
+	core->philos[core->num_of_philos] = NULL;
 	if (init_forks(core))
 		return (1);
 	init_threads(core);

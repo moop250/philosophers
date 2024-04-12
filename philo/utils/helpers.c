@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:54:00 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 18:27:09 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:01:28 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ long long	get_current_time(int ms_us)
 	return (time_ret);
 }
 
-void    ph_usleep(long usec)
+void	ph_usleep(long usec)
 {
 	long	start;
 	long	diff;
@@ -43,7 +43,7 @@ void    ph_usleep(long usec)
 		else
 			while (get_current_time(2) - start < usec)
 				;
-    }
+	}
 }
 
 int	is_even(int in)

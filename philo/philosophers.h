@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:42:29 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 18:41:38 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/12 16:01:11 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			ph_atoi(const char *str);
 int			isdigit(int c);
 void		*philo_brain(void *in);
 long long	get_current_time(int ms_us);
-void		 ph_usleep(long usec);
+void		ph_usleep(long usec);
 int			is_even(int in);
 int			checkdeath(t_core *core);
 int			checkhunger(t_philo *philo, t_core *core);
