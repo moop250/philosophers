@@ -1,5 +1,5 @@
 # Philosophers
-![100/100](https://img.shields.io/badge/125%2F100-brightgreen)
+![100/100](https://img.shields.io/badge/100%2F100-brightgreen)
 
 ## Description
 
