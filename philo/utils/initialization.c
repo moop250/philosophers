@@ -6,7 +6,7 @@
 /*   By: hlibine <hlibine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 22:59:05 by hlibine           #+#    #+#             */
-/*   Updated: 2024/04/11 18:41:48 by hlibine          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:52:28 by hlibine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	init_philos(t_core *core)
 	return (0);
 }
 
-static void	*init_threads(t_core *core)
+static void	init_threads(t_core *core)
 {
 	int	i;
 
@@ -54,7 +54,6 @@ static void	*init_threads(t_core *core)
 		pthread_create(&core->philos[i]->thread, NULL, &philo_brain,
 			(void *)core->philos[i]);
 	}
-	return (0);
 }
 
 static int	init_forks(t_core *core)
