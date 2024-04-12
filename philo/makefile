@@ -38,7 +38,7 @@ define HEADER
          ░░░▒▒▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░
         ░░▓▒▒▒▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░
         ░░░▒▒▒▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░   _ __ ___   ___   ___  _ __
-          ░░▒▒▒▒▒▒▒░▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░  | '_ ` _ \ / _ \ / _ \| '_ \
+          ░░▒▒▒▒▒▒▒░▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░  | '_ ` _ \ / _ \ / _ \| '_ \ 
             ░▒▒▒▒▒▒░█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░ | | | | | | (_) | (_) | |_) |
              ░░▒▓▒▓░▒█░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░      ░░░  |_| |_| |_|\___/ \___/| .__/
                ░░░░░░█░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░                                        |_|
@@ -107,24 +107,23 @@ SUPP = utils/checking.c \
 	@printf "\33[2K"
 
 $(NAME): $(SUPP) $(SRCS)
-	@echo "$(ORANGE)Compiling $(NAME)...$(RESET)"
+	@echo "$$HEADER_NAME"
 	@$(CC) $(SUPP) $(SRCS) $(CFLAGS) -o $(NAME)
-	@echo "$(GREEN)$(NAME) built successfully!$(RESET)"
 
 # Rules
 all: $(NAME)
 
 clean:
-	@echo "$(ORANGE)Cleaning up...$(RESET)"
-	@rm -f *.o
-	@rm -f utils/*.o
-	@echo "$(GREEN)Clean up successful$(RESET)"
+	@echo "$(GREEN)There are no temp files to clean$(RESET)"
 
-fclean: clean
+fclean:
 	@echo "$(ORANGE)Full clean up...$(RESET)"
 	@rm -f $(NAME)
 	@echo "$(GREEN)Full clean up successful$(RESET)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+header:
+	@echo "$$HEADER"
+
+.PHONY: all clean fclean re header
