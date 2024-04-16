@@ -88,7 +88,8 @@ RESET = \033[0m
 
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread
+DEVFLAGS = -g3 -fsanitize=thread
 RM = rm -f
 
 SRCS = philosophers.c \
@@ -113,6 +114,10 @@ $(NAME): $(SUPP) $(SRCS)
 # Rules
 all: $(NAME)
 
+debug:
+	@echo "$(ORANGE)Complining debug $(NAME)$(RESET)"
+	@$(CC) $(SUPP) $(SRCS) $(CFLAGS) $(DEVFLAGS) -o $(NAME)
+
 clean:
 	@echo "$(GREEN)There are no temp files to clean$(RESET)"
 
@@ -126,4 +131,4 @@ re: fclean all
 header:
 	@echo "$$HEADER"
 
-.PHONY: all clean fclean re header
+.PHONY: all clean fclean re header debug
